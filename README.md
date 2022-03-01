@@ -1,191 +1,139 @@
 # ASSIGNMNENT-2
 
-Q1
-package assignment2;
+EMPLOYEE CLASS
 
-import java.util.ArrayList;
+package com.junit.empoyee;
 
-public class ReplaceElement {
-	public static void main(String[]args) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		
-		list.add(1);
-		list.add(2);
-		list.add(3);
-		list.add(4);
-		list.add(5);
-		
-		System.out.println("Original list:- "+ list);
-		int a=6;
-		list.set(1, a);
-		
-		System.out.println("After replacing:- " + list);
-	}
-}
+import com.example.employee.factory.EmployeeValidationException;
 
-  
-Q2
-  
-package movies.java;
-
-public class Movie {
+public class Employee {
 	
-	private String name;
-	private Integer year;
-	private Double rating;
+	String Name;
+	String Role;
+	long Salary;
 	
-	public Movie() {
+	public Employee()
+	{
 		
 	}
 	
-	public Movie(String name, Integer year , Double rating) {
-		super();
-		this.name = name;
-		this.year = year;
-		this.rating = rating;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Integer getYear() {
-		return year;
-	}
-
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-
-	public Double getRating() {
-		return rating;
-	}
-
-	public void setRating(Double rating) {
-		this.rating = rating;
+	public Employee(String Role) {
+		 this.Role= Role;
 	}
 	
-	
-    @Override
 	public String toString() {
-		return "Movie [name=" + name + ", year=" + year + ", rating=" + rating + "]";
+		
+		return "Role: "+Role;
+		
 	}
-}
-  
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-public class MovieSort {
-	public static void main(String[] args) {
-		ArrayList<Movie> movie = new ArrayList<Movie>();
-		movie.add(new Movie("Gangubai Kathiawadi",2022,9.3));
-		movie.add(new Movie("Iron Man",2010,7.8));
-		movie.add(new Movie("Kuch Kuch Hota Hai",1997,6.6));
+	
+	public String specialcharvalidation(String Name) throws EmployeeValidationException {
 		
-		System.out.println(movie);
-		
-		System.out.println("Year wise sorting:-");
-		Collections.sort(movie, new Comparator<Movie>(){
-			
-			public int compare(Movie o1 , Movie o2) {
-				return (o1.getYear() - o2.getYear());
+		for(int i=0; i<Name.length();i++) {
+			if (Name.charAt(i)=='@'|| Name.charAt(i)=='$'|| Name.charAt(i)=='!'|| Name.charAt(i)=='#'||Name.charAt(i)=='%') {
+				
+				    throw new EmployeeValidationException();
+			    
 			}
-		});
-		for(Movie m:movie) {
-			System.out.println(m.getName()+" "+m.getRating()+" "+m.getYear());
 		}
 		
- 
-        System.out.println("Rating wise sorting:-");
-		Collections.sort(movie, new Comparator<Movie>(){
-			
-			public int compare(Movie o1 , Movie o2) {
-				return (int) (o1.getRating() - o2.getRating());
-			}
-		});
-        for(Movie m:movie) {
- 			System.out.println(m.getName()+" "+m.getRating()+" "+m.getYear());
- 		}
-        
-        
-        System.out.println("Name wise sorting:-"); 
-        Collections.sort(movie, new Comparator<Movie>(){
-
-			@Override
-			public int compare(Movie o1, Movie o2) {
-				// TODO Auto-generated method stub
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
-        for(Movie m:movie) {
- 			System.out.println(m.getName()+" "+m.getRating()+" "+m.getYear());
- 		}
-    }
-}
-  
-  
-Q3
-  
-package assignment2;
-
-import java.util.HashMap;
-import java.util.Set;
-
-public class HashMapDemo {
+		return Name+" does not have special characters";
+		
 	
-	public static void main(String[] args) {
-		
-		HashMap<String,Integer> hm = new HashMap<String,Integer>();
-		
-		hm.put("Red",3);
-		hm.put("Blue",1);
-		hm.put("Green",2);
-		
-		Set ks = hm.keySet();
-		
-		System.out.println(ks);
 	}
 }
-  
-  
-Q4
-  
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+
+HR CLASS
+package com.junit.empoyee;
 
 
-public class Sort {
-	public static void main(String[] args) {
-		HashMap<String,Integer> hm = new HashMap<String,Integer>();
-		hm.put("Red",3);
-		hm.put("Blue",1);
-		hm.put("Green",2);
+public class HR extends Employee {
+
+	public HR(String Role) {
+		super(Role);
 		
-	    List<Map.Entry<String,Integer>> list = new ArrayList<>(hm.entrySet());
-	    Collections.sort(list, new Comparator<Map.Entry<String, Integer>>(){
+		// TODO Auto-generated constructor stub
+	}
+}
 
-			@Override
-			public int compare(Map.Entry<String,Integer> o1, Map.Entry<String,Integer> o2) {
-				// TODO Auto-generated method stub
-				return (o1.getValue()-o2.getValue());
-			}
-	    });
-	    
-	    for(Map.Entry<String,Integer> o:list) {
-	        System.out.println(o.getKey()+" ");
+MANAGER CLASS
+package com.junit.empoyee;
+
+
+public class Manager extends Employee {
+
+	public Manager(String Role) {
+		super(Role);
+		
+		// TODO Auto-generated constructor stub
+	}
+}
+
+
+EMPLOYEE FACTORY
+package com.example.employee.factory;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertThrows;
+
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.jupiter.api.Test;
+
+import com.junit.empoyee.Employee;
+import com.junit.empoyee.EmployeeService;
+import com.junit.empoyee.HR;
+import com.junit.empoyee.Manager;
+
+
+public class EmployeeFactory {
+	  public static Employee createEmployee(String Role) {
+	       switch(Role) {
+	       case "HR" : return new HR(Role);
+	       case "Manager" : return new Manager(Role);
+		   }
+		
+		      return null;
+	  }
+	
+	    @Test
+	    public void specialcharvalidationTest() throws EmployeeValidationException {
+	    	 Employee employee = new Employee("HR");
+		     assertEquals( "Rajesh does not have special characters", employee.specialcharvalidation("Rajesh"));
+		     assertThrows(EmployeeValidationException.class, () -> employee.specialcharvalidation("R@jesh"));
+		     assertThat(employee, IsInstanceOf.instanceOf(Employee.class));
+
 	    }
-	}
+	    
+	    
+	    public static void main(String[] args) throws EmployeeValidationException {
+	    
+	    	Employee e3 = new Employee();
+	    	EmployeeService e4= new EmployeeService();
+	    	e4.calculateSalary(e3, 0.1);
+	    	
+	  }
+	 }
+	 
 
+EMPLOYEE SERVICE
+
+package com.junit.empoyee;
+
+public class EmployeeService {
+	
+	Employee emp = new Employee();
+	
+	public void calculateSalary(Employee emp , double d) {
+		emp.Salary = (long) (emp.Salary + emp.Salary *d);
+		System.out.println(emp.Salary);
+	}
+	
 }
 
+package com.example.employee.factory;
+
+public class EmployeeValidationException extends Exception {
+
+}
